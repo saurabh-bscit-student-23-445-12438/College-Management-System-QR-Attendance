@@ -1100,7 +1100,7 @@ def edit_assignment(id):
         subjects=subjects
     )
 
-# ----------------- Delete Assigned Subject ----------------
+# ----------------- Delete Assigned Subject -----------------
 
 @app.route("/admin/delete_assignment/<int:id>")
 def delete_assignment(id):
