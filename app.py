@@ -416,7 +416,7 @@ def student_dashboard():
         paid = 0
         pending = 0
 
-    # 💳 Payment History
+    # Payment History
     cursor.execute("""
     SELECT amount_paid, payment_date
     FROM fee_payments
@@ -497,7 +497,7 @@ def faculty_dashboard():
     """, (faculty_id,))
     subjects = cursor.fetchall()
 
-    # 🔔 notice count
+    # notice count
     cursor.execute("""
     SELECT COUNT(*) AS total
     FROM notices
@@ -559,7 +559,7 @@ def start_attendance():
 
     today = datetime.now().date()
 
-    # STEP 1: sabko ABSENT mark karo
+    # STEP 1: All ABSENT
     cursor.execute("""
     SELECT student_id FROM students
     WHERE course_id = (
