@@ -88,7 +88,7 @@ def admin_add_student():
         course_id = request.form.get("course_id")
         dept_id = request.form.get("department_id")
 
-        # 🔥 ADD THIS LINE
+        # ADD THIS LINE
         admission_date = datetime.now().date()
 
         os.makedirs("static/images", exist_ok=True)
@@ -352,7 +352,7 @@ def student_dashboard():
 
     student_id = session["student_id"]
 
-    # 👤 Profile
+    # Profile
     cursor.execute("""
     SELECT students.*, courses.course_name, departments.department_name
     FROM students
@@ -362,7 +362,7 @@ def student_dashboard():
     """, (student_id,))
     student = cursor.fetchone()
 
-    # 📊 Attendance
+    # Attendance
     cursor.execute("""
     SELECT 
         subjects.subject_name,
@@ -378,7 +378,7 @@ def student_dashboard():
     """, (student_id,))
     attendance = cursor.fetchall()
 
-    # 🔔 Notices
+    # Notices
     cursor.execute("""
     SELECT COUNT(*) AS total
     FROM notices
@@ -393,7 +393,7 @@ def student_dashboard():
     """)
     notices = cursor.fetchall()
 
-    # 💰 Fee Details
+    # Fee Details
     cursor.execute("""
     SELECT 
         f.total_fee,
@@ -559,7 +559,7 @@ def start_attendance():
 
     today = datetime.now().date()
 
-    # 🔥 STEP 1: sabko ABSENT mark karo
+    # STEP 1: sabko ABSENT mark karo
     cursor.execute("""
     SELECT student_id FROM students
     WHERE course_id = (
@@ -581,7 +581,7 @@ def start_attendance():
     conn.commit()
     conn.close()
 
-    # 🔥 STEP 2: camera start
+    # STEP 2: camera start
     return redirect("/mark_attendance")
 
 @app.route("/mark_attendance")
@@ -609,7 +609,7 @@ def mark_attendance():
             conn = get_connection()
             cursor = conn.cursor()
 
-            # ✅ student find
+            # student find
             cursor.execute(
                 "SELECT student_id FROM students WHERE roll_no=%s", (roll_no,)
             )
@@ -624,7 +624,7 @@ def mark_attendance():
 
             student_id = result[0]
 
-            # ✅ check current status
+            # check current status
             cursor.execute("""
             SELECT status FROM attendance
             WHERE student_id=%s AND subject_id=%s AND date=%s
@@ -646,7 +646,7 @@ def mark_attendance():
                 flash("Already marked!", "warning")
                 return redirect("/faculty_dashboard")
 
-            # ✅ update only once
+            # update only once
             cursor.execute("""
             UPDATE attendance
             SET status='Present', method='QR'
@@ -1565,10 +1565,10 @@ def daily_report():
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # 📅 Today date
+    # Today date
     today = datetime.now().date()
 
-    # 📊 Attendance Summary
+    # Attendance Summary
     cursor.execute("""
         SELECT 
             COUNT(*) AS total_attendance,
@@ -1579,7 +1579,7 @@ def daily_report():
     """, (today,))
     attendance_data = cursor.fetchone()
 
-    # 💰 Fee Collection Today
+    # Fee Collection Today
     cursor.execute("""
         SELECT 
             IFNULL(SUM(amount_paid), 0) AS total_collection
@@ -1590,7 +1590,7 @@ def daily_report():
 
     conn.close()
 
-    # 📄 DataFrame banana
+    # DataFrame banana
     data = [{
         "Date": today,
         "Total Attendance": attendance_data["total_attendance"] or 0,

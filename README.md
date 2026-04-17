@@ -66,4 +66,4 @@ This system manages students, faculty, attendance, fees, notices, and reports in
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/saurabh-bscit-student-23-445-12438/College-Management-System-QR-Attendance.git
+git clone https://github.com/BSCIT-445-12438-Saurabh/College-Management-System-QR-Attendance.git
